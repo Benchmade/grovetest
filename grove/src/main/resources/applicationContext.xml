@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<bean id="shopItemSearchServiceClient" class="com.taobao.hsf.app.spring.util.HSFSpringConsumerBean"
+		init-method="init">
+		<property name="interfaceName"
+			value="com.taobao.tmallsearch.service.ShopItemSearchService" />
+		<property name="version">
+			<value>1.0.0.daily</value>
+		</property>
+		<property name="target">
+			<value>10.125.193.176:12200</value>
+		</property>
+	</bean>
+
+
+	<bean id="shopSearchServiceClient" class="com.taobao.hsf.app.spring.util.HSFSpringConsumerBean"
+		init-method="init">
+		<property name="interfaceName"
+			value="com.taobao.tmallsearch.service.ShopSearchService" />
+		<property name="version">
+			<value>1.0.0.daily</value>
+		</property>
+		<property name="target">
+			<value>10.125.193.176:12200</value>
+		</property>
+	</bean>
+
+
+
+</beans>
