@@ -1,24 +1,9 @@
 package org.grove.common.ehcache;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URI;
-
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
-
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
 
 public class LoadHDFSData {
 
-	public static void main(String[] args) throws Exception{
+	/*public static void main(String[] args) throws Exception{
 		
 		CacheManager cacheManager = new CacheManager();
 		Ehcache cache = cacheManager.getCache("zymo");
@@ -108,5 +93,5 @@ public class LoadHDFSData {
 		System.out.println(cache.getSize());
 		
 		cacheManager.shutdown();
-	}
+	}*/
 }

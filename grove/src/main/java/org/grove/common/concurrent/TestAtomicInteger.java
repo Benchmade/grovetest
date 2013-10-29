@@ -7,23 +7,37 @@ import org.junit.Test;
 
 public class TestAtomicInteger {
 
+	public static AtomicInteger ai = new AtomicInteger();
+	
+	public static class XXX extends Thread{
+		@Override
+		public void run() {
+			for(int i=0;i<100000;i++){
+				ai.decrementAndGet();
+			}
+		}
+	}
+	
+	public static class ADD extends Thread{
+		@Override
+		public void run() {
+			for(int i=0;i<100000;i++){
+				ai.incrementAndGet();
+			}
+		}
+	}
 	
 	@Test
-	public void test(){
+	public void test()throws Exception{
 		
-		AtomicInteger ai = new AtomicInteger();
+		XXX x = new XXX();
+		x.start();
+		ADD a = new ADD();
+		a.start();
 		
-		for(int i=0;i<100;i++){
-			System.out.println(ai.incrementAndGet());
-			System.out.println(" - " + ai.get());
-		}
+		Thread.sleep(10000);
 		
-		AtomicLong al = new AtomicLong();
-		for(int j=0;j<100;j++){
-			al.addAndGet(j);
-		}
-		System.out.println(al.get());
-		
+		System.out.println(ai.get());
 	}
 	
 }

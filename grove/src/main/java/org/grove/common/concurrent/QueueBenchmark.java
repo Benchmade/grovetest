@@ -13,11 +13,11 @@ public class QueueBenchmark {
 	public static void main(String[] args) {
 		ExecutorService ex = Executors.newFixedThreadPool(10);
 		long st = System.currentTimeMillis();
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 5; i++) {
 			Thread a = new Thread(new Consumer());
 			ex.execute(a);
 		}
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 5; i++) {
 			Thread b = new Thread(new Producer());
 			ex.execute(b);
 		}
@@ -38,17 +38,9 @@ public class QueueBenchmark {
 		@Override
 		public void run() {
 			for(int i=0;i<10000000;i++){
-				try {
-					queue.put(String.valueOf(i));
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				queue.offer(String.valueOf(i));
 			}
-			try {
-				queue.put("end");
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			queue.offer("end");
 		}
 		
 	}
