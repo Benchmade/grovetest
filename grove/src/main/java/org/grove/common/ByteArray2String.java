@@ -37,6 +37,7 @@ public class ByteArray2String {
 		
 	}
 	*/
+
 	
 	public static void main(String[] args) {
         //init data with many repetitions of A-Z
