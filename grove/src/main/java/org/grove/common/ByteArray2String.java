@@ -38,7 +38,6 @@ public class ByteArray2String {
 	}
 	*/
 
-	
 	public static void main(String[] args) {
         //init data with many repetitions of A-Z
         final byte[] temp = new byte[ 1024 * 1024 * 100];
