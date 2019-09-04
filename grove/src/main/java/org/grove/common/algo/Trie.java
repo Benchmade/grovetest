@@ -1,34 +1,36 @@
 package org.grove.common.algo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
 class Trie {
 
-    HashMap<Character,Node> root ;
+   Node root ;
     /** Initialize your data structure here. */
     public Trie() {
-        root = new HashMap(32);
+        root = new Node();
     }
 
     /** Inserts a word into the trie. */
     public void insert(String word) {
         char[] ca = word.toCharArray();
-        HashMap<Character,Node> curNode = root;
+        Node curNode = root;
         for(int i=0;i<ca.length;i++){
-            Node nNode;
-            if(curNode.containsKey(ca[i])){
-                nNode = curNode.get(ca[i]);
-                curNode = nNode.getChild();
+            Node nn = curNode.getChild()[ca[i]-'a'];
+            if(nn==null){
+                Node insertNode = new Node();
+                insertNode.setData(ca[i]);
                 if(i==ca.length-1){
-                    curNode.get(ca[i]).setEnd(true);
+                    insertNode.setEnd(true);
                 }
+                curNode.getChild()[ca[i]-'a']= insertNode;
+                curNode = insertNode;
             }else{
-                nNode = new Node();
-                nNode.setData(ca[i]);
-                nNode.setEnd(i==ca.length-1);
-                curNode.put(ca[i],nNode);
-                curNode = nNode.getChild();
+                if(i==ca.length-1){
+                    nn.setEnd(true);
+                }
+                curNode = nn;
             }
         }
     }
@@ -36,15 +38,15 @@ class Trie {
     /** Returns if the word is in the trie. */
     public boolean search(String word) {
         char[] ca = word.toCharArray();
-        HashMap<Character,Node> curNode = root;
+        Node curNode = root;
         boolean result = false;
         for(int i=0;i<ca.length;i++){
-            if(curNode.containsKey(ca[i])){
-                Node node = curNode.get(ca[i]);
-                if(i==ca.length-1 && node.isEnd()){
+            Node nn = curNode.getChild()[ca[i]-'a'];
+            if(nn!=null){
+                if(i==ca.length-1 && nn.isEnd()){
                     result = true;
                 }else{
-                    curNode = node.getChild();
+                    curNode = nn;
                 }
             }else{
                 break;
@@ -56,15 +58,15 @@ class Trie {
     /** Returns if there is any word in the trie that starts with the given prefix. */
     public boolean startsWith(String prefix) {
         char[] ca = prefix.toCharArray();
-        HashMap<Character,Node> curNode = root;
+        Node curNode = root;
         boolean result = false;
         for(int i=0;i<ca.length;i++){
-            if(curNode.containsKey(ca[i])){
-                Node node = curNode.get(ca[i]);
+            Node nn = curNode.getChild()[ca[i]-'a'];
+            if(nn!=null){
                 if(i==ca.length-1){
                     result = true;
                 }else{
-                    curNode = node.getChild();
+                    curNode = nn;
                 }
             }else{
                 break;
@@ -82,7 +84,7 @@ class Trie {
     public static class Node{
         char data;
         boolean isEnd = false;
-        HashMap<Character,Node> child = new HashMap<>(32);
+        Node[] child = new Node[26];
 
         public char getData() {
             return data;
@@ -100,19 +102,13 @@ class Trie {
             isEnd = end;
         }
 
-        public HashMap<Character, Node> getChild() {
+        public Node[] getChild() {
             return child;
         }
 
-        public void setChild(HashMap<Character, Node> child) {
+        public void setChild(Node[] child) {
             this.child = child;
         }
-
-        @Override
-        public int hashCode() {
-            return data;
-        }
-
     }
 
     public static void main(String[] args) {
